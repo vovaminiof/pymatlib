@@ -7,12 +7,13 @@ class Parser(object):
 
     def __init__(self, function):
         def translate(f):
-            return re.sub('(x)[^^]|&', 'x^1', f)
+            return re.sub('(x[^^])', 'x^1', f)
 
         def power(f):
             return re.sub('x\^(\d+)', lambda g: 'pow(x,%s)' % g.group(1), f)
 
-        f = translate(function)
+        f = function + ' '
+        f = translate(f)
         self._max_power = self.__get_max_power(f)
         f = power(f)
         self._function = self.__parse_str(f)
