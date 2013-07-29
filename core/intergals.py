@@ -1,8 +1,6 @@
 # intergals.py
 from funcparser import Parser
-from decorators.cls import timer
 
-@timer
 class Integral(object):
     def __init__(self, function, a, b):
         parser = Parser(function)
@@ -50,5 +48,3 @@ class Integral(object):
     @property
     def value(self):
         return self._value
-
-i = Integral('6*x^2 + 2*x + 2', 1, 10)
