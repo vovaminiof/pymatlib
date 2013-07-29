@@ -1,6 +1,8 @@
 # intergals.py
 from funcparser import Parser
+from decorators.cls import timer
 
+@timer
 class Integral(object):
     def __init__(self, function, a, b):
         parser = Parser(function)
@@ -21,7 +23,7 @@ class Integral(object):
             self._value = self.__simpsons_rule()
 
     def __rectangle_rule(self):
-        h = float((self.b - self.a)) / self.n
+        h = float(self.b - self.a)/self.n
         result = 0.0
         for i in range(1, self.n + 1):
             result += self.f(self.a + (2*i - 1)*h/2.0)
@@ -29,7 +31,7 @@ class Integral(object):
         return h*result
 
     def __trapezoidal_rule(self):
-        h = float((self.b - self.a)) / self.n
+        h = float(self.b - self.a)/self.n
         result = self.f(self.a) + self.f(self.b)
         for i in range(2, self.n):
             result += 2 * self.f(self.a + (i-1)*h)
@@ -37,9 +39,8 @@ class Integral(object):
         return h*result / 2.0
 
     def __simpsons_rule(self):
-        m = self.n / 2
-        h = float((self.b - self.a))/self.n
-        result = self.f(self.a) + self.f(self.a + self.n*h)
+        h = float(self.b - self.a)/self.n
+        result = self.f(self.a) + self.f(self.b)
         for i in range(1, self.n):
             index = 4 if i % 2 != 0 else 2
             result += index * self.f(self.a + i*h)
@@ -49,3 +50,5 @@ class Integral(object):
     @property
     def value(self):
         return self._value
+
+i = Integral('6*x^2 + 2*x + 2', 1, 10)
