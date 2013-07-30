@@ -12,11 +12,9 @@ class Parser(object):
         def power(f):
             return re.sub('x\^(\d+)', lambda g: 'pow(x,%s)' % g.group(1), f)
 
-        f = function + ' '
-        f = translate(f)
+        f = translate(function + ' ')
         self._max_power = self.__get_max_power(f)
-        f = power(f)
-        self._function = self.__parse_str(f)
+        self._function = self.__parse_str(power(f))
 
     def __get_max_power(self, f):
         powers = re.findall('\^(\d)', f)
